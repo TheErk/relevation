@@ -1,10 +1,12 @@
 # Create your views here.
-import cStringIO as StringIO
+#import cStringIO as StringIO
+from io import StringIO
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template import Context, loader, RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
-from django.core.servers.basehttp import FileWrapper
+from django.shortcuts import render, get_object_or_404
+#from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
 
 from judgementapp.models import *
 
@@ -32,7 +34,7 @@ def qrels(request):
 def query_list(request):
     queries = Query.objects.order_by('qId')
 
-    return render_to_response('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
+    return render('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
 
 def query(request, qId):
     query = Query.objects.get(qId=qId)
